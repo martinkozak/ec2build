@@ -1,5 +1,6 @@
 #!/bin/bash
 # 2010 Copyright Yejun Yang (yejunx AT gmail DOT com)
+# 2011 Copyright Martin Kozák (martinkozak AT martinkozak DOT net)
 # Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States License.
 # http://creativecommons.org/licenses/by-nc-sa/3.0/us/
 
@@ -29,27 +30,21 @@ p
 w
 EOF
 
-mkfs.ext3 ${EBSDEVICE}1
-mkfs.btrfs ${EBSDEVICE}2
+mkfs.ext4 -j ${EBSDEVICE}1
+mkfs.ext4 -j ${EBSDEVICE}2
 mkdir ${NEWROOT}
-mount -o compress ${EBSDEVICE}2 ${NEWROOT}
+mount ${EBSDEVICE}2 ${NEWROOT}
 chmod 755 ${NEWROOT}
 mkdir ${NEWROOT}/boot
 mount ${EBSDEVICE}1 ${NEWROOT}/boot
-btrfs subvolume create ${NEWROOT}/home
-btrfs subvolume create ${NEWROOT}/etc
-btrfs subvolume create ${NEWROOT}/srv
-btrfs subvolume create ${NEWROOT}/var
-btrfs subvolume create ${NEWROOT}/opt
-btrfs subvolume create ${NEWROOT}/usr
 
-PACKS="filesystem pacman sed coreutils ca-certificates groff \
-        less which procps logrotate syslog-ng net-tools initscripts psmisc nano vi \
+PACKS=" filesystem pacman sed coreutils ca-certificates groff \
+        less which procps logrotate syslog-ng net-tools initscripts psmisc nano vi mc \
         iputils tar sudo mailx openssh kernel26-ec2 kernel26-ec2-headers \
         wget curl screen bash-completion ca-certificates kernel26-ec2 \
-	kernel26-ec2-headers ec2-metadata btrfs-progs-git zsh ec2arch vim vimpager \
-	vim-colorsamplerpack cpio dnsutils base-devel devtools srcpac abs \
-	lesspipe ssmtp iproute2"
+        kernel26-ec2-headers ec2-metadata zsh ec2arch \
+        cpio dnsutils base-devel devtools srcpac abs \
+        lesspipe ssmtp iproute2 wget"
 
 cat <<EOF > pacman.conf
 [options]
@@ -137,13 +132,14 @@ cp $ROOT/etc/skel/.screenrc $ROOT/root
 mv $ROOT/etc/fstab $ROOT/etc/fstab.pacorig
 
 cat <<EOF >$ROOT/etc/fstab
-$(blkid -c /dev/null -s UUID -o export ${EBSDEVICE}2) /     auto    defaults,compress,relatime 0 1
-$(blkid -c /dev/null -s UUID -o export ${EBSDEVICE}1) /boot auto    defaults,noauto,relatime 0 0
+${EBSDEVICE}2 /     auto    defaults, relatime 0 1
+${EBSDEVICE}1 /boot auto    defaults,noauto,relatime 0 0
 /dev/xvdb /tmp  auto    defaults,relatime 0 0
 /dev/xvda3 swap  swap   defaults 0 0
 none      /proc proc    nodev,noexec,nosuid 0 0
 none /dev/pts devpts defaults 0 0
-none /dev/shm tmpfs nodev,nosuid 0 0
+none /dev/shm1 ramfs nodev,nosuid 0 0
+none /dev/shm2 tmpfs nodev,nosuid,size=50M 0 0
 EOF
 
 mv $ROOT/etc/makepkg.conf $ROOT/etc/makepkg.conf.pacorig
@@ -155,7 +151,7 @@ chmod 1777 $ROOT/opt/{sources,packages,srcpackages}
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> $ROOT/etc/sudoers
 sed -i 's/bash/zsh/' $ROOT/etc/passwd
 curl -o $ROOT/root/.zshrc  "https://github.com/MrElendig/dotfiles-alice/raw/master/.zshrc"
-curl -o $ROOT/root/.vimrc "https://github.com/MrElendig/dotfiles-alice/raw/master/.vimrc"
+#curl -o $ROOT/root/.vimrc "https://github.com/MrElendig/dotfiles-alice/raw/master/.vimrc"
 
 mv $ROOT/etc/resolv.conf $ROOT/etc/resolv.conf.pacorig
 echo "nameserver 172.16.0.23" > $ROOT/etc/resolv.conf

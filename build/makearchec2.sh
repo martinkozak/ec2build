@@ -1,8 +1,11 @@
 #!/bin/bash
 # 2010 Copyright Yejun Yang (yejunx AT gmail DOT com)
 # 2011 Copyright Martin Kozák (martinkozak AT martinkozak DOT net)
+# 2011 Copyright Ernie Brodeur (ebrodeur AT ujami DOT net)
 # Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States License.
 # http://creativecommons.org/licenses/by-nc-sa/3.0/us/
+
+set -e    # stop on errors
 
 if [[ `uname -m` == i686 ]]; then
   ARCH=i686
@@ -45,7 +48,7 @@ mount ${EBSDEVICE}1 ${NEWROOT}/boot
 #        kernel26-ec2-headers ec2-metadata zsh ec2arch \
 #        cpio dnsutils base-devel devtools srcpac abs \
 #        lesspipe ssmtp iproute2 wget man"
-        
+
 PACKS=" filesystem pacman coreutils ca-certificates \
         less which procps logrotate syslog-ng net-tools initscripts psmisc nano vi mc \
         iputils tar sudo heirloom-mailx openssh kernel26-ec2 \
@@ -59,6 +62,7 @@ cat <<EOF > pacman.conf
 HoldPkg     = pacman glibc
 SyncFirst   = pacman
 Architecture = $ARCH
+IgnorePkg   = kernel26 kernel26-headers
 [ec2]
 Server = file:///root/repo
 [core]
@@ -69,7 +73,7 @@ Include = /etc/pacman.d/mirrorlist
 Include = /etc/pacman.d/mirrorlist
 EOF
 
-LC_ALL=C mkarchroot -C pacman.conf $ROOT $PACKS
+LC_ALL=C mkarchroot -f -C pacman.conf $ROOT $PACKS
 
 mv $ROOT/etc/pacman.d/mirrorlist $ROOT/etc/pacman.d/mirrorlist.pacorig
 cat <<EOF >$ROOT/etc/pacman.d/mirrorlist
@@ -102,6 +106,10 @@ rm:2345:wait:/etc/rc.multi
 rh:06:wait:/etc/rc.shutdown
 su:S:wait:/sbin/sulogin -p
 ca::ctrlaltdel:/sbin/shutdown -t3 -r now
+
+# This will enable the system log.
+c0:12345:respawn:/sbin/agetty 38400 hvc0 linux
+
 EOF
 
 mv $ROOT/etc/hosts.deny $ROOT/etc/hosts.deny.pacorig
@@ -119,7 +127,7 @@ timeout 1
 
 title  Arch Linux
 	root   (hd0,0)
-	kernel /vmlinuz26-ec2 root=/dev/xvda2 ip=dhcp spinlock=tickless ro
+	kernel /vmlinuz26-ec2 console=hvc0 root=/dev/xvda2 ip=dhcp spinlock=tickless ro
 EOF
 
 cd $ROOT/boot
@@ -140,8 +148,8 @@ cp $ROOT/etc/skel/.screenrc $ROOT/root
 mv $ROOT/etc/fstab $ROOT/etc/fstab.pacorig
 
 cat <<EOF >$ROOT/etc/fstab
-${EBSDEVICE}2 /     auto    defaults, relatime 0 1
-${EBSDEVICE}1 /boot auto    defaults,noauto,relatime 0 0
+${EBSDEVICE}2 /     ext4    defaults, relatime 0 1
+${EBSDEVICE}1 /boot ext4    defaults,noauto,relatime 0 0
 /dev/xvdb /tmp  auto    defaults,relatime 0 0
 /dev/xvda3 swap  swap   defaults 0 0
 none      /proc proc    nodev,noexec,nosuid 0 0

@@ -33,7 +33,7 @@ p
 w
 EOF
 
-mkfs.ext4 -j ${EBSDEVICE}1
+mkfs.ext3 ${EBSDEVICE}1
 mkfs.ext4 -j ${EBSDEVICE}2
 
 if [ ! -e ${NEWROOT} ]; then

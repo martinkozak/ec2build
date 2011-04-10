@@ -35,7 +35,11 @@ EOF
 
 mkfs.ext4 -j ${EBSDEVICE}1
 mkfs.ext4 -j ${EBSDEVICE}2
-mkdir ${NEWROOT}
+
+if [ ! -e ${NEWROOT} ]; then
+  mkdir ${NEWROOT}
+done
+
 mount ${EBSDEVICE}2 ${NEWROOT}
 chmod 755 ${NEWROOT}
 mkdir ${NEWROOT}/boot

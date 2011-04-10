@@ -38,13 +38,21 @@ chmod 755 ${NEWROOT}
 mkdir ${NEWROOT}/boot
 mount ${EBSDEVICE}1 ${NEWROOT}/boot
 
-PACKS=" filesystem pacman sed coreutils ca-certificates groff \
+#PACKS=" filesystem pacman sed coreutils ca-certificates groff \
+#        less which procps logrotate syslog-ng net-tools initscripts psmisc nano vi mc \
+#        iputils tar sudo mailx openssh kernel26-ec2 kernel26-ec2-headers \
+#        curl screen bash-completion ca-certificates kernel26-ec2 \
+#        kernel26-ec2-headers ec2-metadata zsh ec2arch \
+#        cpio dnsutils base-devel devtools srcpac abs \
+#        lesspipe ssmtp iproute2 wget man"
+        
+PACKS=" filesystem pacman coreutils ca-certificates \
         less which procps logrotate syslog-ng net-tools initscripts psmisc nano vi mc \
-        iputils tar sudo mailx openssh kernel26-ec2 kernel26-ec2-headers \
-        curl screen bash-completion ca-certificates kernel26-ec2 \
-        kernel26-ec2-headers ec2-metadata zsh ec2arch \
-        cpio dnsutils base-devel devtools srcpac abs \
-        lesspipe ssmtp iproute2 wget"
+        iputils tar sudo heirloom-mailx openssh kernel26-ec2 \
+        curl screen bash-completion \
+        ec2-metadata zsh ec2arch \
+        dnsutils \
+        lesspipe ssmtp man"
 
 cat <<EOF > pacman.conf
 [options]

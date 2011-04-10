@@ -38,7 +38,7 @@ mkfs.ext4 -j ${EBSDEVICE}2
 
 if [ ! -e ${NEWROOT} ]; then
   mkdir ${NEWROOT}
-done
+fi
 
 mount ${EBSDEVICE}2 ${NEWROOT}
 chmod 755 ${NEWROOT}

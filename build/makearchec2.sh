@@ -53,7 +53,7 @@ mount ${EBSDEVICE}1 ${NEWROOT}/boot
 #        cpio dnsutils base-devel devtools srcpac abs \
 #        lesspipe ssmtp iproute2 wget man"
 
-PACKS=" filesystem pacman coreutils ca-certificates \
+PACKS=" filesystem bash pacman coreutils ca-certificates \
         less which procps logrotate syslog-ng net-tools initscripts psmisc nano vi mc \
         iputils tar sudo heirloom-mailx openssh kernel26-ec2 \
         curl screen bash-completion \
@@ -89,7 +89,9 @@ chmod 666 $ROOT/dev/null
 mknod -m 666 $ROOT/dev/random c 1 8
 mknod -m 666 $ROOT/dev/urandom c 1 9
 mkdir -m 755 $ROOT/dev/pts
-mkdir -m 1777 $ROOT/dev/shm
+mkdir -m 1777 $ROOT/dev/ramfs
+mkdir -m 1777 $ROOT/dev/tmpfs
+ln -s $ROOT/dev/tmpfs $ROOT/dev/shm
 
 mv $ROOT/etc/rc.conf $ROOT/etc/rc.conf.pacorig
 cat <<EOF >$ROOT/etc/rc.conf
@@ -152,14 +154,14 @@ cp $ROOT/etc/skel/.screenrc $ROOT/root
 mv $ROOT/etc/fstab $ROOT/etc/fstab.pacorig
 
 cat <<EOF >$ROOT/etc/fstab
-${EBSDEVICE}2 /     ext4    defaults, relatime 0 1
+${EBSDEVICE}2 /     ext4    defaults,relatime 0 1
 ${EBSDEVICE}1 /boot ext4    defaults,noauto,relatime 0 0
 /dev/xvdb /tmp  auto    defaults,relatime 0 0
 /dev/xvda3 swap  swap   defaults 0 0
 none      /proc proc    nodev,noexec,nosuid 0 0
 none /dev/pts devpts defaults 0 0
-none /dev/shm1 ramfs nodev,nosuid 0 0
-none /dev/shm2 tmpfs nodev,nosuid,size=50M 0 0
+none /dev/ramfs ramfs nodev,nosuid 0 0
+none /dev/tmpfs tmpfs nodev,nosuid,size=50M 0 0
 EOF
 
 mv $ROOT/etc/makepkg.conf $ROOT/etc/makepkg.conf.pacorig

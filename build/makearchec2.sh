@@ -2,6 +2,7 @@
 # 2010 Copyright Yejun Yang (yejunx AT gmail DOT com)
 # 2011 Copyright Martin Kozák (martinkozak AT martinkozak DOT net)
 # 2011 Copyright Ernie Brodeur (ebrodeur AT ujami DOT net)
+# 2011 Copyright Antoine Martin
 # Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States License.
 # http://creativecommons.org/licenses/by-nc-sa/3.0/us/
 
@@ -19,7 +20,8 @@ ROOT=/tmp/arch_$ARCH
 EBSDEVICE=/dev/xvdg
 NEWROOT=/mnt/newroot
 
-fdisk ${EBSDEVICE} <<EOF
+if [ ! -b ${EBSDEVICE}1 ]; then
+    fdisk ${EBSDEVICE} <<EOF
 n
 p
 
@@ -32,9 +34,10 @@ p
 
 w
 EOF
+fi
 
-mkfs.ext4 -j ${EBSDEVICE}1
-mkfs.ext4 -j ${EBSDEVICE}2
+mkfs.ext4 -j ${EBSDEVICE}1 || exit 1
+mkfs.ext4 -j ${EBSDEVICE}2 || exit 1
 
 if [ ! -e ${NEWROOT} ]; then
   mkdir ${NEWROOT}
@@ -79,11 +82,13 @@ EOF
 
 LC_ALL=C mkarchroot -f -C pacman.conf $ROOT $PACKS
 
-mv $ROOT/etc/pacman.d/mirrorlist $ROOT/etc/pacman.d/mirrorlist.pacorig
-cat <<EOF >$ROOT/etc/pacman.d/mirrorlist
-Server = http://mirrors.kernel.org/archlinux/\$repo/os/\$arch
-Server = ftp://ftp.archlinux.org/\$repo/os/\$arch
-EOF
+#mv $ROOT/etc/pacman.d/mirrorlist $ROOT/etc/pacman.d/mirrorlist.pacorig
+#cat <<EOF >$ROOT/etc/pacman.d/mirrorlist
+##Server = http://mirrors.kernel.org/archlinux/\$repo/os/\$arch
+#Server = ftp://ftp.archlinux.org/\$repo/os/\$arch
+#EOF
+
+cp /etc/pacman.d/mirrorlist $ROOT/etc/pacman.d/mirrorlist
 
 chmod 666 $ROOT/dev/null
 mknod -m 666 $ROOT/dev/random c 1 8
@@ -180,7 +185,7 @@ echo "nameserver 172.16.0.23" > $ROOT/etc/resolv.conf
 
 touch $ROOT/root/firstboot
 cp -a /root/repo $ROOT/root/
-cp -a /var/cache/pacman/pkg/. $ROOT/var/cache/pacman/pkg/
+#cp -a /var/cache/pacman/pkg/. $ROOT/var/cache/pacman/pkg/
 
 cd $ROOT
 find . -depth -print | cpio -pdmv --sparse $NEWROOT

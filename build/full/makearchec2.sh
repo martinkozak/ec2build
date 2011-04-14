@@ -174,7 +174,7 @@ chmod 1777 $ROOT/opt/{sources,packages,srcpackages}
 
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> $ROOT/etc/sudoers
 sed -i 's/bash/zsh/' $ROOT/etc/passwd
-curl -o $ROOT/root/.zshrc  "https://github.com/martinkozak/ec2build/raw/master/build/.zshrc"
+curl -o $ROOT/root/.zshrc  "https://github.com/martinkozak/ec2build/raw/master/build/full/.zshrc"
 #curl -o $ROOT/root/.vimrc "https://github.com/MrElendig/dotfiles-alice/raw/master/.vimrc"
 
 mv $ROOT/etc/resolv.conf $ROOT/etc/resolv.conf.pacorig

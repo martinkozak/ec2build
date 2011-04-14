@@ -159,8 +159,8 @@ cp $ROOT/etc/skel/.screenrc $ROOT/root
 mv $ROOT/etc/fstab $ROOT/etc/fstab.pacorig
 
 cat <<EOF >$ROOT/etc/fstab
-${EBSDEVICE}2 /     ext3    defaults,relatime 0 1
-${EBSDEVICE}1 /boot ext4    defaults,noauto,relatime 0 0
+${EBSDEVICE}2 /     ext4    defaults,relatime 0 1
+${EBSDEVICE}1 /boot ext3    defaults,noauto,relatime 0 0
 /dev/xvdb /tmp  auto    defaults,relatime 0 0
 /dev/xvda3 swap  swap   defaults 0 0
 none      /proc proc    nodev,noexec,nosuid 0 0

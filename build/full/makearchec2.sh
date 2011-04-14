@@ -61,7 +61,7 @@ PACKS=" filesystem bash pacman coreutils ca-certificates \
         iputils tar sudo heirloom-mailx openssh kernel26-ec2 \
         wget screen bash-completion \
         ec2-metadata zsh ec2arch \
-        dnsutils \
+        dnsutils iptables ntp \
         ssmtp man"
 
 cat <<EOF > pacman.conf

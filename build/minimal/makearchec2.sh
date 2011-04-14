@@ -59,7 +59,7 @@ mount ${EBSDEVICE}1 ${NEWROOT}/boot
 PACKS=" filesystem grep find coreutils glibc bash pacman mkinitcpio \
         less procps logrotate syslog-ng net-tools initscripts iputils psmisc \
         heirloom-mailx openssh kernel26-ec2 \
-        bash-completion ec2-metadata ec2arch ssmtp"
+        ec2-metadata ec2arch ssmtp"
 
 cat <<EOF > pacman.conf
 [options]
@@ -169,7 +169,7 @@ cp /etc/makepkg.conf $ROOT/etc/
 mkdir $ROOT/opt/{sources,packages,srcpackages}
 chmod 1777 $ROOT/opt/{sources,packages,srcpackages}
 
-echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> $ROOT/etc/sudoers
+#echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> $ROOT/etc/sudoers
 #sed -i 's/bash/zsh/' $ROOT/etc/passwd
 #curl -o $ROOT/root/.zshrc  "https://github.com/martinkozak/ec2build/raw/master/build/full/.zshrc"
 #curl -o $ROOT/root/.vimrc "https://github.com/MrElendig/dotfiles-alice/raw/master/.vimrc"

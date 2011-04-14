@@ -36,7 +36,7 @@ w
 EOF
 fi
 
-mkfs.ext4 -j ${EBSDEVICE}1 || exit 1
+mkfs.ext3 -j ${EBSDEVICE}1 || exit 1
 mkfs.ext4 -j ${EBSDEVICE}2 || exit 1
 
 if [ ! -e ${NEWROOT} ]; then
@@ -159,7 +159,7 @@ cp $ROOT/etc/skel/.screenrc $ROOT/root
 mv $ROOT/etc/fstab $ROOT/etc/fstab.pacorig
 
 cat <<EOF >$ROOT/etc/fstab
-${EBSDEVICE}2 /     ext4    defaults,relatime 0 1
+${EBSDEVICE}2 /     ext3    defaults,relatime 0 1
 ${EBSDEVICE}1 /boot ext4    defaults,noauto,relatime 0 0
 /dev/xvdb /tmp  auto    defaults,relatime 0 0
 /dev/xvda3 swap  swap   defaults 0 0

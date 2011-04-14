@@ -144,13 +144,13 @@ cp $ROOT/etc/ssh/sshd_config $ROOT/etc/ssh/sshd_config.pacorig
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/'  $ROOT/etc/ssh/sshd_config
 sed -i 's/#UseDNS yes/UseDNS no/' $ROOT/etc/ssh/sshd_config
 
-cp $ROOT/etc/nanorc $ROOT/etc/nanorc.pacorig
-sed -i 's/^# include/include/' $ROOT/etc/nanorc
-echo "set nowrap" >> $ROOT/etc/nanorc
-echo "set softwrap" >> $ROOT/etc/nanorc
+#cp $ROOT/etc/nanorc $ROOT/etc/nanorc.pacorig
+#sed -i 's/^# include/include/' $ROOT/etc/nanorc
+#echo "set nowrap" >> $ROOT/etc/nanorc
+#echo "set softwrap" >> $ROOT/etc/nanorc
 
 cp $ROOT/etc/skel/.bash* $ROOT/root
-cp $ROOT/etc/skel/.screenrc $ROOT/root
+#cp $ROOT/etc/skel/.screenrc $ROOT/root
 mv $ROOT/etc/fstab $ROOT/etc/fstab.pacorig
 
 cat <<EOF >$ROOT/etc/fstab
@@ -170,8 +170,8 @@ mkdir $ROOT/opt/{sources,packages,srcpackages}
 chmod 1777 $ROOT/opt/{sources,packages,srcpackages}
 
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> $ROOT/etc/sudoers
-sed -i 's/bash/zsh/' $ROOT/etc/passwd
-curl -o $ROOT/root/.zshrc  "https://github.com/martinkozak/ec2build/raw/master/build/full/.zshrc"
+#sed -i 's/bash/zsh/' $ROOT/etc/passwd
+#curl -o $ROOT/root/.zshrc  "https://github.com/martinkozak/ec2build/raw/master/build/full/.zshrc"
 #curl -o $ROOT/root/.vimrc "https://github.com/MrElendig/dotfiles-alice/raw/master/.vimrc"
 
 mv $ROOT/etc/resolv.conf $ROOT/etc/resolv.conf.pacorig

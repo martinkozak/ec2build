@@ -94,9 +94,7 @@ chmod 666 $ROOT/dev/null
 mknod -m 666 $ROOT/dev/random c 1 8
 mknod -m 666 $ROOT/dev/urandom c 1 9
 mkdir -m 755 $ROOT/dev/pts
-mkdir -m 1777 $ROOT/dev/ramfs
-mkdir -m 1777 $ROOT/dev/tmpfs
-ln -s $ROOT/dev/tmpfs $ROOT/dev/shm
+mkdir -m 1777 $ROOT/dev/shm
 
 mv $ROOT/etc/rc.conf $ROOT/etc/rc.conf.pacorig
 cat <<EOF >$ROOT/etc/rc.conf
@@ -165,8 +163,7 @@ $(blkid -c /dev/null -s UUID -o export ${EBSDEVICE}1) /boot ext3    defaults,noa
 /dev/xvda3 swap  swap   defaults 0 0
 none      /proc proc    nodev,noexec,nosuid 0 0
 none /dev/pts devpts defaults 0 0
-none /dev/ramfs ramfs nodev,nosuid 0 0
-none /dev/tmpfs tmpfs nodev,nosuid,size=50M 0 0
+none /dev/shm ramfs nodev,nosuid 0 0
 EOF
 
 mv $ROOT/etc/makepkg.conf $ROOT/etc/makepkg.conf.pacorig

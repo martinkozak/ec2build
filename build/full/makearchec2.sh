@@ -59,10 +59,10 @@ mount ${EBSDEVICE}1 ${NEWROOT}/boot
 PACKS=" filesystem bash pacman coreutils ca-certificates \
         less which procps logrotate syslog-ng net-tools initscripts psmisc nano vi mc \
         iputils tar sudo heirloom-mailx openssh kernel26-ec2 \
-        curl screen bash-completion \
+        wget screen bash-completion \
         ec2-metadata zsh ec2arch \
         dnsutils \
-        lesspipe ssmtp man"
+        ssmtp man"
 
 cat <<EOF > pacman.conf
 [options]

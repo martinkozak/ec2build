@@ -63,7 +63,7 @@ PACKS=" filesystem bash pacman coreutils ca-certificates dcron e2fsprogs gzip bz
         ec2-metadata zsh ec2arch rsync tzdata \
         dnsutils iptables ntp diffutils \
         ssmtp mlocate man-pages \
-        findutils "
+        lsof findutils "
 
 cat <<EOF > pacman.conf
 [options]

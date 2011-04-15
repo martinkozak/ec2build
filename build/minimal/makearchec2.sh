@@ -59,7 +59,7 @@ mount ${EBSDEVICE}1 ${NEWROOT}/boot
 PACKS=" filesystem grep findutils coreutils glibc bash pacman mkinitcpio \
         less procps logrotate syslog-ng net-tools initscripts iputils psmisc \
         heirloom-mailx openssh kernel26-ec2 \
-        ec2-metadata ec2arch ssmtp \"
+        ec2-metadata ec2arch ssmtp \
         tzdata "
 
 cat <<EOF > pacman.conf

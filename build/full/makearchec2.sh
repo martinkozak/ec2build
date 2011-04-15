@@ -59,9 +59,9 @@ mount ${EBSDEVICE}1 ${NEWROOT}/boot
 PACKS=" filesystem bash pacman coreutils ca-certificates dcron e2fsprogs gzip bzip2 licenses \
         less which procps logrotate syslog-ng net-tools initscripts psmisc nano vi mc \
         iputils tar sudo heirloom-mailx openssh kernel26-ec2 \
-        wget screen bash-completion iproute2 \
-        ec2-metadata zsh ec2arch \
-        dnsutils iptables ntp \
+        curl wget screen bash-completion iproute2 \
+        ec2-metadata zsh ec2arch rsync tzdata \
+        dnsutils iptables ntp diffutils \
         ssmtp mlocate man-pages \"
         findutils "
 

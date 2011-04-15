@@ -56,7 +56,7 @@ mount ${EBSDEVICE}1 ${NEWROOT}/boot
 #        cpio dnsutils base-devel devtools srcpac abs \
 #        lesspipe ssmtp iproute2 wget man"
 
-PACKS=" filesystem grep find coreutils glibc bash pacman mkinitcpio \
+PACKS=" filesystem grep findutils coreutils glibc bash pacman mkinitcpio \
         less procps logrotate syslog-ng net-tools initscripts iputils psmisc \
         heirloom-mailx openssh kernel26-ec2 \
         ec2-metadata ec2arch ssmtp \"

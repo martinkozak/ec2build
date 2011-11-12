@@ -52,13 +52,13 @@ mount ${EBSDEVICE}1 ${NEWROOT}/boot
 #        less which procps logrotate syslog-ng net-tools initscripts psmisc nano vi mc \
 #        iputils tar sudo mailx openssh kernel26-ec2 kernel26-ec2-headers \
 #        curl screen bash-completion ca-certificates kernel26-ec2 \
-#        kernel26-ec2-headers ec2-metadata zsh ec2arch \
+#        linux-ec2-headers ec2-metadata zsh ec2arch \
 #        cpio dnsutils base-devel devtools srcpac abs \
 #        lesspipe ssmtp iproute2 wget man"
 
 PACKS=" filesystem bash pacman coreutils ca-certificates dcron e2fsprogs gzip bzip2 licenses \
         less which procps logrotate syslog-ng net-tools initscripts psmisc nano vi mc \
-        iputils tar sudo heirloom-mailx openssh kernel26-ec2 \
+        iputils tar sudo heirloom-mailx openssh linux-ec2 \
         curl wget screen bash-completion iproute2 \
         ec2-metadata zsh ec2arch rsync tzdata \
         dnsutils iptables ntp diffutils \
@@ -70,7 +70,7 @@ cat <<EOF > pacman.conf
 HoldPkg     = pacman glibc
 SyncFirst   = pacman
 Architecture = $ARCH
-IgnorePkg   = kernel26 kernel26-headers
+IgnorePkg   = kernel26 kernel26-headers linux linux-headers
 [ec2]
 Server = file:///root/repo
 [core]

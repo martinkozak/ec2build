@@ -58,7 +58,7 @@ mount ${EBSDEVICE}1 ${NEWROOT}/boot
 
 PACKS=" filesystem grep findutils coreutils glibc bash pacman mkinitcpio \
         less procps logrotate syslog-ng net-tools initscripts iputils psmisc \
-        heirloom-mailx openssh kernel26-ec2 \
+        heirloom-mailx openssh linux-ec2 \
         ec2-metadata ec2arch ssmtp \
         tzdata "
 
@@ -67,7 +67,7 @@ cat <<EOF > pacman.conf
 HoldPkg     = pacman glibc
 SyncFirst   = pacman
 Architecture = $ARCH
-IgnorePkg   = kernel26 kernel26-headers
+IgnorePkg   = kernel26 kernel26-headers linux linux-headers
 [ec2]
 Server = file:///root/repo
 [core]

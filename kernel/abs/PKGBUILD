@@ -129,7 +129,7 @@ build() {
   make ${MAKEFLAGS} bzImage modules
 }
 
-package_linux() {
+package_linux-ec2() {
   pkgdesc="The Linux Kernel and modules prepared for Amazon EC2"
   groups=('base')
   depends=('coreutils' 'linux-firmware' 'module-init-tools>=3.16' 'mkinitcpio>=0.7')

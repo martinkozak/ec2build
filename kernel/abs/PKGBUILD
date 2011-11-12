@@ -4,7 +4,7 @@
 
 pkgbase=linux
 # pkgname=('linux' 'linux-headers' 'linux-docs') # Build stock -ARCH kernel
-pkgname=linux-ec2       # Build kernel with a different name
+pkgname=('linux-ec2', 'linux-ec2-headers')       # Build kernel with a different name
 _kernelname=${pkgname#linux}
 _basekernel=3.1
 pkgver=${_basekernel}
@@ -181,7 +181,7 @@ package_linux-ec2() {
   echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--ARCH}/version"
 }
 
-package_linux-headers() {
+package_linux-ec2-headers() {
   pkgdesc="Header files and scripts for building modules for linux kernel"
   provides=('kernel26-headers')
   conflicts=('kernel26-headers')

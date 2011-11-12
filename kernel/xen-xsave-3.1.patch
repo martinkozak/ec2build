@@ -1,6 +1,6 @@
-diff -crB original/arch/x86/xen/enlighten.c new/arch/x86/xen/enlighten.c
-*** original/arch/x86/xen/enlighten.c	2011-11-12 18:42:40.842924371 +0100
---- new/arch/x86/xen/enlighten.c	2011-11-12 18:43:14.016259626 +0100
+diff -crB a/arch/x86/xen/enlighten.c b/arch/x86/xen/enlighten.c
+*** a/arch/x86/xen/enlighten.c	2011-11-12 18:42:40.842924371 +0100
+--- b/arch/x86/xen/enlighten.c	2011-11-12 18:43:14.016259626 +0100
 ***************
 *** 805,810 ****
 --- 805,811 ----

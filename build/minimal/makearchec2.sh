@@ -138,7 +138,7 @@ timeout 1
 
 title  Arch Linux
 	root   (hd0,0)
-	kernel /vmlinuz26-ec2 console=hvc0 root=/dev/xvda2 ip=dhcp spinlock=tickless ro
+	kernel /vmlinuz-linux-ec2 console=hvc0 root=/dev/xvda2 ip=dhcp spinlock=tickless ro
 EOF
 
 cd $ROOT/boot

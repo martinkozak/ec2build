@@ -143,7 +143,7 @@ timeout 1
 title  ArchLinux
 	root   (hd0,0)
 	kernel /vmlinuz-linux-ec2 console=hvc0 root=/dev/xvda2 ip=dhcp spinlock=tickless ro
-  initrd /initramfs-linux-ec2.img
+	initrd /initramfs-linux-ec2.img
 EOF
 
 cd $ROOT/boot

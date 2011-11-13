@@ -175,15 +175,21 @@ chmod 1777 $ROOT/opt/{sources,packages,srcpackages}
 
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> $ROOT/etc/sudoers
 sed -i 's/bash/zsh/' $ROOT/etc/passwd
-curl -o $ROOT/root/.zshrc  "https://github.com/martinkozak/ec2build/raw/master/build/standard/.zshrc"
+curl -o $ROOT/root/.zshrc  "https://raw.github.com/martinkozak/ec2build/master/build/standard/.zshrc"
 #curl -o $ROOT/root/.vimrc "https://github.com/MrElendig/dotfiles-alice/raw/master/.vimrc"
 
 mv $ROOT/etc/resolv.conf $ROOT/etc/resolv.conf.pacorig
 echo "nameserver 172.16.0.23" > $ROOT/etc/resolv.conf
 
 touch $ROOT/root/firstboot
-cp -a /root/repo $ROOT/root/
+#cp -a /root/repo $ROOT/root/
 #cp -a /var/cache/pacman/pkg/. $ROOT/var/cache/pacman/pkg/
+mkdir /root/repo
+curl -o $ROOT/root/repo/ec2-metadata-0.1-1-any.pkg.tar.xz https://raw.github.com/martinkozak/ec2build/master/kernel/repo/ec2-metadata-0.1-1-any.pkg.tar.xz
+curl -o $ROOT/root/repo/ec2arch-1.0-1-any.pkg.tar.xz https://raw.github.com/martinkozak/ec2build/master/kernel/repo/ec2arch-1.0-1-any.pkg.tar.xz
+curl -o $ROOT/root/repo/linux-ec2-3.1-4-$ARCH.pkg.tar.xz http://c263555.r55.cf1.rackcdn.com/linux-ec2-3.1-4-$ARCH.pkg.tar.xz
+curl -o $ROOT/root/repo/linux-ec2-headers-3.1-4-$ARCH.pkg.tar.xz http://c263555.r55.cf1.rackcdn.com/linux-ec2-headers-3.1-4-$ARCH.pkg.tar.xz
+repo-add /root/repo/ec2.db.tar.gz /root/repo/ec2arch-1.0-1-any.pkg.tar.xz /root/repo/ec2-metadata-0.1-1-any.pkg.tar.xz linux-ec2-3.1-4-$ARCH.pkg.tar.xz linux-ec2-headers-3.1-4-$ARCH.pkg.tar.xz
 
 cd $ROOT
 find . -depth -print | cpio -pdmv --sparse $NEWROOT

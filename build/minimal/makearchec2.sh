@@ -136,7 +136,7 @@ cat <<EOF >$ROOT/boot/boot/grub/menu.lst
 default 0
 timeout 1
 
-title  Arch Linux
+title  ArchLinux
 	root   (hd0,0)
 	kernel /vmlinuz-linux-ec2 console=hvc0 root=/dev/xvda2 ip=dhcp spinlock=tickless ro
 EOF

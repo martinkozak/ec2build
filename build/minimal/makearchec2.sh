@@ -139,6 +139,7 @@ timeout 1
 title  ArchLinux
 	root   (hd0,0)
 	kernel /vmlinuz-linux-ec2 console=hvc0 root=/dev/xvda2 ip=dhcp spinlock=tickless ro
+  initrd /initramfs-linux-ec2.img
 EOF
 
 cd $ROOT/boot
@@ -174,7 +175,7 @@ cp /etc/makepkg.conf $ROOT/etc/
 mkdir $ROOT/opt/{sources,packages,srcpackages}
 chmod 1777 $ROOT/opt/{sources,packages,srcpackages}
 
-#echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> $ROOT/etc/sudoers
+echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> $ROOT/etc/sudoers
 #sed -i 's/bash/zsh/' $ROOT/etc/passwd
 #curl -o $ROOT/root/.zshrc  "https://github.com/martinkozak/ec2build/raw/master/build/full/.zshrc"
 #curl -o $ROOT/root/.vimrc "https://github.com/MrElendig/dotfiles-alice/raw/master/.vimrc"

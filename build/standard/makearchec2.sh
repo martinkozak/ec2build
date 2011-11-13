@@ -6,6 +6,11 @@
 # Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States License.
 # http://creativecommons.org/licenses/by-nc-sa/3.0/us/
 
+# Requred packages: 
+#   devtools, cpio, curl
+
+###
+
 set -e    # stop on errors
 
 if [[ `uname -m` == i686 ]]; then
@@ -91,11 +96,11 @@ LC_ALL=C mkarchroot -f -C pacman.conf $ROOT $PACKS
 
 cp /etc/pacman.d/mirrorlist $ROOT/etc/pacman.d/mirrorlist
 
-chmod 666 $ROOT/dev/null
-mknod -m 666 $ROOT/dev/random c 1 8
-mknod -m 666 $ROOT/dev/urandom c 1 9
-mkdir -m 755 $ROOT/dev/pts
-mkdir -m 1777 $ROOT/dev/shm
+#chmod 666 $ROOT/dev/null
+#mknod -m 666 $ROOT/dev/random c 1 8
+#mknod -m 666 $ROOT/dev/urandom c 1 9
+mkdir -p -m 755 $ROOT/dev/pts
+mkdir -p -m 1777 $ROOT/dev/shm
 
 mv $ROOT/etc/rc.conf $ROOT/etc/rc.conf.pacorig
 cat <<EOF >$ROOT/etc/rc.conf
@@ -122,22 +127,23 @@ c0:12345:respawn:/sbin/agetty 38400 hvc0 linux
 
 EOF
 
-mv $ROOT/etc/hosts.deny $ROOT/etc/hosts.deny.pacorig
-cat <<EOF >$ROOT/etc/hosts.deny
-#
-# /etc/hosts.deny
-#
-# End of file
-EOF
+#mv $ROOT/etc/hosts.deny $ROOT/etc/hosts.deny.pacorig
+#cat <<EOF >$ROOT/etc/hosts.deny
+##
+## /etc/hosts.deny
+##
+## End of file
+#EOF
 
 mkdir -p $ROOT/boot/boot/grub
 cat <<EOF >$ROOT/boot/boot/grub/menu.lst
 default 0
 timeout 1
 
-title  Arch Linux
+title  ArchLinux
 	root   (hd0,0)
-	kernel /vmlinuz26-ec2 console=hvc0 root=/dev/xvda2 ip=dhcp spinlock=tickless ro
+	kernel /vmlinuz-linux-ec2 console=hvc0 root=/dev/xvda2 ip=dhcp spinlock=tickless ro
+  initrd /initramfs-linux-ec2.img
 EOF
 
 cd $ROOT/boot
@@ -184,7 +190,7 @@ echo "nameserver 172.16.0.23" > $ROOT/etc/resolv.conf
 touch $ROOT/root/firstboot
 #cp -a /root/repo $ROOT/root/
 #cp -a /var/cache/pacman/pkg/. $ROOT/var/cache/pacman/pkg/
-mkdir /root/repo
+mkdir -p $ROOT/root/repo
 curl -o $ROOT/root/repo/ec2-metadata-0.1-1-any.pkg.tar.xz https://raw.github.com/martinkozak/ec2build/master/kernel/repo/ec2-metadata-0.1-1-any.pkg.tar.xz
 curl -o $ROOT/root/repo/ec2arch-1.0-1-any.pkg.tar.xz https://raw.github.com/martinkozak/ec2build/master/kernel/repo/ec2arch-1.0-1-any.pkg.tar.xz
 curl -o $ROOT/root/repo/linux-ec2-3.1-4-$ARCH.pkg.tar.xz http://c263555.r55.cf1.rackcdn.com/linux-ec2-3.1-4-$ARCH.pkg.tar.xz

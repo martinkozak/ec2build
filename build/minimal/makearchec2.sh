@@ -6,6 +6,11 @@
 # Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States License.
 # http://creativecommons.org/licenses/by-nc-sa/3.0/us/
 
+# Requred packages: 
+#   devtools, cpio, curl
+
+###
+
 set -e    # stop on errors
 
 if [[ `uname -m` == i686 ]]; then
@@ -87,11 +92,11 @@ LC_ALL=C mkarchroot -f -C pacman.conf $ROOT $PACKS
 
 cp /etc/pacman.d/mirrorlist $ROOT/etc/pacman.d/mirrorlist
 
-chmod 666 $ROOT/dev/null
-mknod -m 666 $ROOT/dev/random c 1 8
-mknod -m 666 $ROOT/dev/urandom c 1 9
-mkdir -m 755 $ROOT/dev/pts
-mkdir -m 1777 $ROOT/dev/shm
+#chmod 666 $ROOT/dev/null
+#mknod -m 666 $ROOT/dev/random c 1 8
+#mknod -m 666 $ROOT/dev/urandom c 1 9
+mkdir -p -m 755 $ROOT/dev/pts
+mkdir -p -m 1777 $ROOT/dev/shm
 
 mv $ROOT/etc/rc.conf $ROOT/etc/rc.conf.pacorig
 cat <<EOF >$ROOT/etc/rc.conf
@@ -118,13 +123,13 @@ c0:12345:respawn:/sbin/agetty 38400 hvc0 linux
 
 EOF
 
-mv $ROOT/etc/hosts.deny $ROOT/etc/hosts.deny.pacorig
-cat <<EOF >$ROOT/etc/hosts.deny
-#
-# /etc/hosts.deny
-#
-# End of file
-EOF
+#mv $ROOT/etc/hosts.deny $ROOT/etc/hosts.deny.pacorig
+#cat <<EOF >$ROOT/etc/hosts.deny
+##
+## /etc/hosts.deny
+##
+## End of file
+#EOF
 
 mkdir -p $ROOT/boot/boot/grub
 cat <<EOF >$ROOT/boot/boot/grub/menu.lst

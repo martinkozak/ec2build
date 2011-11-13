@@ -58,8 +58,7 @@ mount ${EBSDEVICE}1 ${NEWROOT}/boot
 
 PACKS=" filesystem grep findutils coreutils glibc bash pacman mkinitcpio \
         less procps logrotate syslog-ng net-tools initscripts iputils psmisc \
-        heirloom-mailx openssh linux-ec2 \
-        ec2-metadata ec2arch ssmtp \
+        openssh linux-ec2 ec2-metadata ec2arch \
         tzdata "
 
 cat <<EOF > pacman.conf
@@ -181,7 +180,7 @@ echo "nameserver 172.16.0.23" > $ROOT/etc/resolv.conf
 touch $ROOT/root/firstboot
 #cp -a /root/repo $ROOT/root/
 #cp -a /var/cache/pacman/pkg/. $ROOT/var/cache/pacman/pkg/
-mkdir /root/repo
+mkdir -p $ROOT/root/repo
 curl -o $ROOT/root/repo/ec2-metadata-0.1-1-any.pkg.tar.xz https://raw.github.com/martinkozak/ec2build/master/kernel/repo/ec2-metadata-0.1-1-any.pkg.tar.xz
 curl -o $ROOT/root/repo/ec2arch-1.0-1-any.pkg.tar.xz https://raw.github.com/martinkozak/ec2build/master/kernel/repo/ec2arch-1.0-1-any.pkg.tar.xz
 curl -o $ROOT/root/repo/linux-ec2-3.1-4-$ARCH.pkg.tar.xz http://c263555.r55.cf1.rackcdn.com/linux-ec2-3.1-4-$ARCH.pkg.tar.xz

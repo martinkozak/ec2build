@@ -56,7 +56,7 @@ mount ${EBSDEVICE}1 ${NEWROOT}/boot
 #        cpio dnsutils base-devel devtools srcpac abs \
 #        lesspipe ssmtp iproute2 wget man"
 
-PACKS=" filesystem bash pacman coreutils ca-certificates dcron e2fsprogs gzip bzip2 licenses \
+PACKS=" filesystem bash pacman coreutils ca-certificates cronie e2fsprogs gzip bzip2 licenses \
         less which procps logrotate syslog-ng net-tools initscripts psmisc nano vi mc \
         iputils tar sudo heirloom-mailx openssh linux-ec2 \
         curl wget screen bash-completion iproute2 \

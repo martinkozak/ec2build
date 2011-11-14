@@ -9,7 +9,7 @@ _kernelname=${pkgname#linux}
 _basekernel=3.1
 pkgver=${_basekernel}
 pkgrel=4
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl')
@@ -130,13 +130,13 @@ build() {
 }
 
 package_linux-ec2() {
-  pkgdesc="The Linux Kernel and modules prepared for Amazon EC2"
-  groups=('base')
+  pkgdesc="The Linux Kernel and modules suitable for Amazon EC2"
+  groups=('ec2')
   depends=('coreutils' 'linux-firmware' 'module-init-tools>=3.16' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
-  provides=('kernel26')
-  conflicts=('kernel26')
-  replaces=('kernel26')
+  #provides=('kernel26')
+  #conflicts=('kernel26')
+  #replaces=('kernel26')
   backup=("etc/mkinitcpio.d/${pkgname}.preset")
   install=${pkgname}.install
 
@@ -182,10 +182,10 @@ package_linux-ec2() {
 }
 
 package_linux-ec2-headers() {
-  pkgdesc="Header files and scripts for building modules for linux kernel"
-  provides=('kernel26-headers')
-  conflicts=('kernel26-headers')
-  replaces=('kernel26-headers')
+  pkgdesc="Header files and scripts for building modules for linux kernel suitable for Amazon EC2"
+  #provides=('kernel26-headers')
+  #conflicts=('kernel26-headers')
+  #replaces=('kernel26-headers')
 
   mkdir -p "${pkgdir}/lib/modules/${_kernver}"
 
@@ -310,21 +310,4 @@ package_linux-ec2-headers() {
 
   # remove unneeded architectures
   rm -rf "${pkgdir}"/usr/src/linux-${_kernver}/arch/{alpha,arm,arm26,avr32,blackfin,cris,frv,h8300,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,parisc,powerpc,ppc,s390,sh,sh64,sparc,sparc64,um,v850,xtensa}
-}
-
-package_linux-docs() {
-  pkgdesc="Kernel hackers manual - HTML documentation that comes with the Linux kernel."
-  provides=('kernel26-docs')
-  conflicts=('kernel26-docs')
-  replaces=('kernel26-docs')
-
-  cd "${srcdir}/linux-${_basekernel}"
-
-  mkdir -p "${pkgdir}/usr/src/linux-${_kernver}"
-  cp -al Documentation "${pkgdir}/usr/src/linux-${_kernver}"
-  find "${pkgdir}" -type f -exec chmod 444 {} \;
-  find "${pkgdir}" -type d -exec chmod 755 {} \;
-
-  # remove a file already in linux package
-  rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/DocBook/Makefile"
 }

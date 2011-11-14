@@ -1,6 +1,5 @@
 # $Id: PKGBUILD 130991 2011-07-09 12:23:51Z thomas $
-# Maintainer: Tobias Powalowski <tpowa@archlinux.org>
-# Maintainer: Thomas Baechler <thomas@archlinux.org>
+# Maintainer: Martin Kozák <martinkozak@martinkozak.net>
 
 pkgbase=linux-ec2
 # pkgname=('linux' 'linux-headers' 'linux-docs') # Build stock -ARCH kernel
@@ -8,7 +7,7 @@ pkgname=('linux-ec2' 'linux-ec2-headers')       # Build kernel with a different 
 _kernelname=${pkgname#linux}
 _basekernel=3.1
 pkgver=${_basekernel}
-pkgrel=1
+pkgrel=5
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')

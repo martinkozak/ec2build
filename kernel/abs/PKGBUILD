@@ -2,13 +2,13 @@
 # Maintainer: Tobias Powalowski <tpowa@archlinux.org>
 # Maintainer: Thomas Baechler <thomas@archlinux.org>
 
-pkgbase=linux
+pkgbase=linux-ec2
 # pkgname=('linux' 'linux-headers' 'linux-docs') # Build stock -ARCH kernel
 pkgname=('linux-ec2' 'linux-ec2-headers')       # Build kernel with a different name
 _kernelname=${pkgname#linux}
 _basekernel=3.1
 pkgver=${_basekernel}
-pkgrel=4
+pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')

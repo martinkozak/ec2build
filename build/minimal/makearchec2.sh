@@ -64,7 +64,7 @@ mount ${EBSDEVICE}1 ${NEWROOT}/boot
 PACKS=" filesystem grep findutils coreutils glibc bash pacman mkinitcpio \
         less procps logrotate syslog-ng net-tools initscripts iputils psmisc \
         openssh linux-ec2 ec2-metadata ec2arch \
-        tzdata "
+        tzdata inetutils"
 
 cat <<EOF > pacman.conf
 [options]
@@ -191,7 +191,7 @@ curl -o $ROOT/root/repo/ec2-metadata-0.1-1-any.pkg.tar.xz https://raw.github.com
 curl -o $ROOT/root/repo/ec2arch-1.0-1-any.pkg.tar.xz https://raw.github.com/martinkozak/ec2build/master/kernel/repo/ec2arch-1.0-1-any.pkg.tar.xz
 curl -o $ROOT/root/repo/linux-ec2-3.1-4-$ARCH.pkg.tar.xz http://c263555.r55.cf1.rackcdn.com/linux-ec2-3.1-4-$ARCH.pkg.tar.xz
 curl -o $ROOT/root/repo/linux-ec2-headers-3.1-4-$ARCH.pkg.tar.xz http://c263555.r55.cf1.rackcdn.com/linux-ec2-headers-3.1-4-$ARCH.pkg.tar.xz
-repo-add /root/repo/ec2.db.tar.gz /root/repo/ec2arch-1.0-1-any.pkg.tar.xz /root/repo/ec2-metadata-0.1-1-any.pkg.tar.xz /root/repo/linux-ec2-3.1-4-$ARCH.pkg.tar.xz /root/repo/linux-ec2-headers-3.1-4-$ARCH.pkg.tar.xz
+repo-add $ROOT/root/repo/ec2.db.tar.gz $ROOT/root/repo/ec2arch-1.0-1-any.pkg.tar.xz $ROOT/root/repo/ec2-metadata-0.1-1-any.pkg.tar.xz $ROOT/root/repo/linux-ec2-3.1-4-$ARCH.pkg.tar.xz $ROOT/root/repo/linux-ec2-headers-3.1-4-$ARCH.pkg.tar.xz
 
 cd $ROOT
 find . -depth -print | cpio -pdmv --sparse $NEWROOT

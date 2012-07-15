@@ -114,8 +114,6 @@ title  Arch Linux EC2
 	initrd /initramfs-linux-ec2.img
 EOF
 
-cd $ROOT/boot/../..
-
 cp $ROOT/etc/ssh/sshd_config $ROOT/etc/ssh/sshd_config.pacorig
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/'  $ROOT/etc/ssh/sshd_config
 sed -i 's/#UseDNS yes/UseDNS no/' $ROOT/etc/ssh/sshd_config

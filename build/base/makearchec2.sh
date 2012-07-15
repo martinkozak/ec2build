@@ -1,6 +1,6 @@
 #!/bin/bash
 # 2010 Copyright Yejun Yang (yejunx AT gmail DOT com)
-# 2011 Copyright Martin Kozák (martinkozak AT martinkozak DOT net)
+# 2011-2012 Copyright Martin Kozák (martinkozak AT martinkozak DOT net)
 # 2011 Copyright Ernie Brodeur (ebrodeur AT ujami DOT net)
 # 2011 Copyright Antoine Martin
 # Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States License.
@@ -48,16 +48,16 @@ chmod 755 ${NEWROOT}
 mkdir ${NEWROOT}/boot
 mount ${EBSDEVICE}1 ${NEWROOT}/boot
 
-PACKS="base zsh linux-ec2 ec2-metadata ec2arch"
+PACKS=`./pkglist.rb`
 
 cat <<EOF > pacman.conf
 [options]
 HoldPkg     = pacman glibc
 SyncFirst   = pacman
 Architecture = $ARCH
-IgnorePkg   = linux
+IgnorePkg   = 
 
-[ec2]
+[archlinux-ec2]
 Server = http://downloads.sourceforge.net/project/archlinux-ec2/repo/x86_64
 
 [core]
@@ -127,7 +127,7 @@ mv $ROOT/etc/fstab $ROOT/etc/fstab.pacorig
 
 cat <<EOF >$ROOT/etc/fstab
 $(blkid -c /dev/null -s UUID -o export ${EBSDEVICE}2) /     ext4    defaults,relatime 0 1
-$(blkid -c /dev/null -s UUID -o export ${EBSDEVICE}1) /boot ext4    defaults,relatime 0 0
+$(blkid -c /dev/null -s UUID -o export ${EBSDEVICE}1) /boot ext4    defaults,relatime 0 1
 /dev/xvdb /tmp  auto    defaults,relatime 0 0
 /dev/xvda3 swap  swap   defaults 0 0
 none      /proc proc    nodev,noexec,nosuid 0 0
@@ -142,6 +142,7 @@ mkdir $ROOT/opt/{sources,packages,srcpackages}
 chmod 1777 $ROOT/opt/{sources,packages,srcpackages}
 
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> $ROOT/etc/sudoers
+curl -o $ROOT/root/.zshrc  "https://raw.github.com/martinkozak/ec2build/master/build/base/.zshrc"
 
 mv $ROOT/etc/resolv.conf $ROOT/etc/resolv.conf.pacorig
 echo "nameserver 172.16.0.23" > $ROOT/etc/resolv.conf

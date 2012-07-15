@@ -145,7 +145,7 @@ echo "nameserver 172.16.0.23" > $ROOT/etc/resolv.conf
 
 mkdir $ROOT/etc/ec2
 curl -o $ROOT/etc/ec2/welcome.sh  "https://raw.github.com/martinkozak/ec2build/master/build/base/welcome.sh"
-chown u+x $ROOT/etc/ec2/welcome.sh
+chmod a+x $ROOT/etc/ec2/welcome.sh
 echo >> $ROOT/root/.bashrc
 echo >> $ROOT/root/.bashrc
 echo "if [ -e /etc/ec2/welcome.sh ]; then /etc/ec2/welcome.sh; fi" >> $ROOT/root/.bashrc

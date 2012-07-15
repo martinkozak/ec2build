@@ -1,3 +1,6 @@
+
+## Some outdated informations
+
 Step 1: Compile kernel26-ec2 kernel26-ec2-headers ec2-metadata 
                 btrfs-progs-git ec2arch from AUR
 

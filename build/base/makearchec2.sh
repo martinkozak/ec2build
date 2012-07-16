@@ -36,7 +36,7 @@ w
 EOF
 fi
 
-mkfs.ext4 -j ${EBSDEVICE}1 || exit 1
+mkfs.ext3 -j ${EBSDEVICE}1 || exit 1
 mkfs.ext4 -j ${EBSDEVICE}2 || exit 1
 
 if [ ! -e ${NEWROOT} ]; then
@@ -125,7 +125,7 @@ cat <<EOF >$ROOT/etc/fstab
 $(blkid -c /dev/null -s UUID -o export ${EBSDEVICE}2) /     ext4    defaults,relatime 0 1
 $(blkid -c /dev/null -s UUID -o export ${EBSDEVICE}1) /boot ext4    defaults,relatime 0 1
 /dev/xvdb /tmp  auto    defaults,relatime 0 0
-/dev/xvda3 swap  swap   defaults 0 0
+#/dev/xvda3 swap  swap   defaults 0 0
 none      /proc proc    nodev,noexec,nosuid 0 0
 none /dev/pts devpts defaults 0 0
 none /dev/shm ramfs nodev,nosuid 0 0
@@ -148,6 +148,7 @@ curl -o $ROOT/etc/ec2/welcome.sh  "https://raw.github.com/martinkozak/ec2build/m
 chmod a+x $ROOT/etc/ec2/welcome.sh
 echo >> $ROOT/root/.bashrc
 echo >> $ROOT/root/.bashrc
+echo "# Arch Linux EC2 welcome script" >> $ROOT/root/.bashrc
 echo "if [ -e /etc/ec2/welcome.sh ]; then /etc/ec2/welcome.sh; fi" >> $ROOT/root/.bashrc
 
 touch $ROOT/root/firstboot

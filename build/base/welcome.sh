@@ -17,12 +17,14 @@ General support for this images and home of this project are at:
 You probably should initialize the archlinux-keyring now by:
     pacman-key --init; pacman-key --populate archlinux
     
-You can disable this message by deleting:
+You can disable this message by removing the file:
     /etc/ec2/welcome.sh
     
 ######################################################################
 "
 
 uname -a
+echo
+echo "Version 20120716."
 echo
 echo

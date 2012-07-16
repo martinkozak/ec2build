@@ -7,7 +7,7 @@
 # http://creativecommons.org/licenses/by-nc-sa/3.0/us/
 
 # Requred packages: 
-#   devtools, cpio, curl
+#   devtools, cpio, curl, ruby
 
 ###
 
